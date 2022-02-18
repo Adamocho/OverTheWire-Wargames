@@ -686,7 +686,53 @@ Password is `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ`
 
 ### Level 24 => 25
 
+> A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
 
+Well, preforming a *brace expansion* will definitely help.
+
+First, create correct brute-force input
+Save to file or display it in terminal
+
+```zsh
+echo -e UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ\ {0..9}{0..9}{0..9}{0..9}\ '\n'
+```
+
+Here, *echo*'s `-e` option enables patterns such as `\n` (new line). First, echo bandit24's password, then `\[space]` creates a space - it's not a separator. Next, there are four brace expansions going from 0 to 9. At the end is a newline character.
+
+Quick look at the output
+```
+[...]
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9992
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9993
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9994
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9995
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9996
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9997
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9998
+ UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 9999
+```
+
+With input ready, use `nc localhost 30002` (pipe) to connect with port 30002.
+
+```zsh
+echo -e UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ\ {0..9}{0..9}{0..9}{0..9}\ '\n' | nc localhost 30002
+
+# OUTPUT
+I am the pincode checker for user bandit25. Please enter the password for user bandit24 and the secret pincode on a single line, separated by a space.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+[...]
+Wrong! Please enter the correct pincode. Try again.
+Wrong! Please enter the correct pincode. Try again.
+Correct!
+The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
+
+Exiting.
+```
+
+The password of user bandit25 is `uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
 ### Level 25 => 26
 ### Level 26 => 27
