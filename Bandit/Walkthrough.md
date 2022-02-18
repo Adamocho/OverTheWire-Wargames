@@ -597,6 +597,8 @@ Bandit23's password is `jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n`
 
 > **NOTE 2:** Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
 
+
+
 ### Level 24 => 25
 ### Level 25 => 26
 ### Level 26 => 27
