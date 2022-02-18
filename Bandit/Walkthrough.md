@@ -1,4 +1,4 @@
-# Bandit
+# Bandit - Walkthrough
 ---
 
 ## Layout (for future)
