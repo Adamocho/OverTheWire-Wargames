@@ -808,4 +808,124 @@ And we are back in bash. *cat* bandit26 password.
 The password is `5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z`
 
 ### Level 26 => 27
+
+> Good job getting a shell! Now hurry and grab the password for bandit27!
+
+Nothing hard, just ls and use that script.
+
+```zsh
+$ ls -Ahl
+total 28K
+-rwsr-x--- 1 bandit27 bandit26 7.2K May  7  2020 bandit27-do # it was in red
+
+$ ./bandit27-do
+Run a command as another user.
+  Example: ./bandit27-do id
+
+$ ./bandit27-do cat /etc/bandit_pass/bandit27
+3ba3118a22e93127a4ed485be72ef5ea
+```
+
+The password is `3ba3118a22e93127a4ed485be72ef5ea`
+
 ### Level 27 => 28
+
+> There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
+
+Create tmp directory. Clone repo to that direcotry and look inside.
+
+```zsh
+$ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
+Cloning into 'repo'...
+Could not create directory '/home/bandit27/.ssh'.
+The authenticity of host 'localhost (127.0.0.1)' can't be established.
+ECDSA key fingerprint is SHA256:98UL0ZWr85496EtCRkKlo20X3OPnyPSB5tB5RPbhczc.
+Are you sure you want to continue connecting (yes/no)? yes
+Failed to add the host to the list of known hosts (/home/bandit27/.ssh/known_hosts).
+This is a OverTheWire game server. More information on http://www.overthewire.org/wargames
+
+bandit27-git@localhost's password:
+remote: Counting objects: 3, done.
+remote: Compressing objects: 100% (2/2), done.
+remote: Total 3 (delta 0), reused 0 (delta 0)
+Receiving objects: 100% (3/3), done.
+
+$ ls
+passwd.txt  repo
+
+$ cd repo/
+bandit27@bandit:/tmp/adam12/repo$ ls
+README
+
+$ cat README
+```
+
+The password to the next level is: `0ef186ac70e04ea33b4c1853d2526fa2`
+
+### Level 28 => 29
+
+> There is a git repository at ssh://bandit28-git@localhost/home/bandit28-git/repo. The password for the user bandit28-git is the same as for the user bandit28.
+
+Same thing as before.
+
+```zsh
+$ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
+# Provide bandit28 password
+
+$ cd repo/
+bandit27@bandit:/tmp/adam12/repo$ ls
+README.md
+bandit27@bandit:/tmp/adam12/repo$ cat README.md
+# Bandit Notes
+Some notes for level29 of bandit.
+
+## credentials
+
+- username: bandit29
+- password: xxxxxxxxxx
+```
+
+Check git log
+```zsh 
+$ git log
+commit edd935d60906b33f0619605abd1689808ccdd5ee
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    fix info leak
+
+commit c086d11a00c0648d095d04c089786efef5e01264
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    add missing data
+
+commit de2ebe2d5fd1598cd547f4d56247e053be3fdc38
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:49 2020 +0200
+
+    initial commit of README.md
+```
+
+Aha! It was changed. Inspect changes by running *git diff*
+
+```zsh
+$ git diff c086d11a00c0648d095d04c089786efef5e01264 de2ebe2d5fd1598cd547f4d56247e053be3fdc38
+diff --git a/README.md b/README.md
+index 3f7cee8..7ba2d2f 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for level29 of bandit.
+ ## credentials
+
+ - username: bandit29
+-- password: bbc96594b4e001778eee9975372716b2
++- password: <TBD>
+```
+
+The password is `bbc96594b4e001778eee9975372716b2`
+
+### Level 29 => 30
+### Level 30 => 31
+### Level 31 => 32
+### Level 32 => 33
