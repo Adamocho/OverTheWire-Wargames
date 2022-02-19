@@ -732,8 +732,45 @@ The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 Exiting.
 ```
 
+Correct cridentials are `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 2588`
+
 The password of user bandit25 is `uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
 ### Level 25 => 26
+
+> Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
+
+```zsh
+$ cat /etc/passwd | grep bandit26
+bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
+```
+
+
+```zsh
+$ cat /usr/bin/showtext
+#!/bin/sh
+
+export TERM=linux
+
+more ~/text.txt
+exit 0
+```
+
+Check *more* manpage
+```
+v  -> Start  up  an  editor  at  current line.  The editor is taken from the environment variable VISUAL if defined, or EDITOR  if  VISUAL  is  not defined, or defaults to vi if neither VISUAL nor EDITOR is defined.
+```
+
+Shrink your terminal, so that is smaller than ~5 lines (less than *file.txt* output). Then log in via ssh. Next, press `v`, which will change editor to vi. Next up, type the following
+
+```vi
+:set shell=/bin/bash
+:shell
+```
+
+And we are back in bash. *cat* bandit26 password.
+
+The password is `5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z`
+
 ### Level 26 => 27
 ### Level 27 => 28
