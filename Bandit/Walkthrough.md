@@ -26,6 +26,8 @@ $ ssh bandit.labs.overthewire.org -p 2220 -l bandit{number}
 
 ### Level 0
 
+> The goal of this level is for you to log into the game using SSH. The host to which you need to connect is bandit.labs.overthewire.org, on port 2220. The username is bandit0 and the password is bandit0. Once logged in, go to the Level 1 page to find out how to beat Level 1.
+
 ```zsh
     # Learn how to use ssh
 $ man ssh
@@ -36,6 +38,8 @@ Login and password is found in level description. Both are `bandit0`.
 
 ### Level 0 => 1
 
+> The password for the next level is stored in a file called readme located in the home directory. Use this password to log into bandit1 using SSH. Whenever you find a password for a level, use SSH (on port 2220) to log into that level and continue the game.
+
 Flag is in the working directory
 
 ```zsh
@@ -45,6 +49,8 @@ $ cat readme # File's text to stout
 `boJ9jbbUNNfktd78OOpsqOltutMc3MY1` is the password.
 
 ### Level 1 => 2
+
+> The password for the next level is stored in a file called - located in the home directory
 
 Here, the file is a dash(`-`). Do the same thing as before.
 
@@ -59,6 +65,8 @@ $ cat ./- # It works!
 
 ### Level 2 => 3
 
+> The password for the next level is stored in a file called spaces in this filename located in the home directory
+
 The same thing, just with spaces (` `) in the filename.
 
 ```zsh
@@ -72,6 +80,8 @@ $ cat "spaces in this filename"
 
 ### Level 3 => 4
 
+> The password for the next level is stored in a hidden file in the inhere directory.
+
 Folder with hidden file.
 
 ```zsh
@@ -84,6 +94,8 @@ $ ls -a # List all files
 `pIwrPrtPN36QITSp3EQaw936yaFoFgAB` is the password.
 
 ### Level 4 => 5
+
+> The password for the next level is stored in the only human-readable file in the inhere directory. Tip: if your terminal is messed up, try the “reset” command.
 
 Go into folder, there are many files preceded by a dash (`-`).
 
@@ -117,6 +129,13 @@ Output
 
 ### Level 5 => 6
 
+> The password for the next level is stored in a file somewhere under the inhere directory and has all of the following properties:
+
+> - human-readable    
+>  - 1033 bytes in size    
+>  - not executable  
+
+
 There's a small problem... namely, multiple folders with files in them. Checking every single one manually would be slow and unefficient, so we will use a couple commands instead.
 
 The *find* command gives us what we need. It can search for files / directories, their size etc. We are looking for file that is 1033 bytes in size, so let's do it, shall we? :)
@@ -134,7 +153,12 @@ Check find's man page for more options.
 
 ### Level 6 => 7
 
-> The flag is storred **somewhere on the server**
+> The password for the next level is stored somewhere on the server and has all of the following properties:
+
+> - owned by user bandit7
+> - owned by group bandit6
+> - 33 bytes in size
+
 
 Again, find will be useful in this case. It can also find files owned by a specific user.
 
@@ -151,6 +175,8 @@ Use cat on the file.
 
 ### Level 7 => 8
 
+> The password for the next level is stored in the file data.txt next to the word millionth
+
 Use grep for matching patterns.
 ```zsh
 $ cat data.txt | grep millionth
@@ -160,6 +186,7 @@ $ cat data.txt | grep millionth
 
 ### Level 8 => 9
 
+> The password for the next level is stored in the file data.txt and is the only line of text that occurs only once
 
 Now the task is to find a line that doesn't repeat. Command 'uniq' does exactly that, but there's one problem. Uniq reports or ommits repeated lines, but needs to have sorted input. Command *sort* speaks for itself. Let's use it.
 
@@ -230,7 +257,7 @@ The password is `5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu`
 
 [Hex dump](https://en.wikipedia.org/wiki/Hex_dump) on Wikipedia.
 
-> Some common names for this program function are `hexdump`, `hd`, `od`, `xxd` and simply `dump` or even `D`.
+> The password for the next level is stored in the file data.txt, which is a hexdump of a file that has been repeatedly compressed. For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example: mkdir /tmp/myname123. Then copy the datafile using cp, and rename it using mv (read the manpages!)
 
 Let's check which functions are available on this machine.
 
@@ -292,6 +319,8 @@ The passsword is `8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL`
 
 ### Level 13 => 14
 
+> The password for the next level is stored in /etc/bandit_pass/bandit14 and can only be read by user bandit14. For this level, you don’t get the next password, but you get a private SSH key that can be used to log into the next level. Note: localhost is a hostname that refers to the machine you are working on
+
 In this level, the only thing we get is an ssh password for bandit14. Use ssh.
 
 ```zsh
@@ -312,6 +341,10 @@ And there we get our password! `BfMYroe26WYalil77FoDi9qh59eK5xNr`
 
 ### Level 15 => 16
 
+> The password for the next level can be retrieved by submitting the password of the current level to port 30001 on localhost using SSL encryption.
+
+> Helpful note: Getting “HEARTBEATING” and “Read R BLOCK”? Use -ign_eof and read the “CONNECTED COMMANDS” section in the manpage. Next to ‘R’ and ‘Q’, the ‘B’ command also works in this version of that command…
+
 I'll use openssl s_client for this. First we connect via ssl, and then provide the password.
 
 ```zsh
@@ -330,7 +363,9 @@ The password is `cluFn7wTiGryunymYOu4RcffSxQluehd`
 
 ### Level 16 => 17
 
-#### Get user password from /etc/bandit_pass/bandit16 is necessary
+> The credentials for the next level can be retrieved by submitting the password of the current level to a port on localhost in the range 31000 to 32000. First find out which of these ports have a server listening on them. Then find out which of those speak SSL and which don’t. There is only 1 server that will give the next credentials, the others will simply send back to you whatever you send to it.
+
+Get user password from /etc/bandit_pass/bandit16 is necessary
 
 ```zsh
 # Scan localhost ports
