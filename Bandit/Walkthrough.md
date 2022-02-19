@@ -926,6 +926,9 @@ index 3f7cee8..7ba2d2f 100644
 The password is `bbc96594b4e001778eee9975372716b2`
 
 ### Level 29 => 30
+
 ### Level 30 => 31
+
 ### Level 31 => 32
+
 ### Level 32 => 33
