@@ -927,7 +927,132 @@ The password is `bbc96594b4e001778eee9975372716b2`
 
 ### Level 29 => 30
 
+> There is a git repository at ssh://bandit29-git@localhost/home/bandit29-git/repo. The password for the user bandit29-git is the same as for the user bandit29.
+
+It's very similar to the previous level in a sense that we must first clone the repo into the tmp directory. 
+
+```zsh
+/tmp/adam23$ git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
+
+# Next, provide bandit29's password
+```
+
+Now *cd* and look inside.
+
+There is only one file called README.md.
+```zsh
+$ cat README.md
+# Bandit Notes
+Some notes for bandit30 of bandit.
+
+## credentials
+
+- username: bandit30
+- password: <no passwords in production!>
+```
+
+No password in production... what about the diff file?  
+*The -p flag is for displaying diff files*
+
+```zsh
+$ git log -p 
+commit 208f463b5b3992906eabf23c562eda3277fea912
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:51 2020 +0200
+
+    fix username
+
+diff --git a/README.md b/README.md
+index 2da2f39..1af21d3 100644
+--- a/README.md
++++ b/README.md
+@@ -3,6 +3,6 @@ Some notes for bandit30 of bandit.
+
+ ## credentials
+
+-- username: bandit29
++- username: bandit30
+ - password: <no passwords in production!>
+
+
+commit 18a6fd6d5ef7f0874bbdda2fa0d77b3b81fd63f7
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:51 2020 +0200
+
+    initial commit of README.md
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..2da2f39
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1,8 @@
++# Bandit Notes
++Some notes for bandit30 of bandit.
++
++## credentials
++
++- username: bandit29
++- password: <no passwords in production!>
+```
+
+The same result... What about the other branches?  
+*The -r switch shows remote branches*
+
+```zsh
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/dev
+  origin/master
+  origin/sploits-dev
+```
+
+The *dev* branch looks a bit sus... :D
+```zsh
+$ git checkout dev
+Branch dev set up to track remote branch dev from origin.
+Switched to a new branch 'dev'
+
+$ git branch
+* dev
+  master
+```
+
+Again, *git log -p*
+```zsh
+$ git log -p
+commit bc833286fca18a3948aec989f7025e23ffc16c07
+Author: Morla Porla <morla@overthewire.org>
+Date:   Thu May 7 20:14:52 2020 +0200
+
+    add data needed for development
+
+diff --git a/README.md b/README.md
+index 1af21d3..39b87a8 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+index 1af21d3..39b87a8 100644
+--- a/README.md
++++ b/README.md
+@@ -4,5 +4,5 @@ Some notes for bandit30 of bandit.
+ ## credentials
+
+ - username: bandit30
+-- password: <no passwords in production!>
++- password: 5b90576bedb2cc04c86a9e924ce42faf
+
+
+commit 8e6c203f885bd4cd77602f8b9a9ea479929ffa57
+```
+
+Aha! 
+
+Password: `5b90576bedb2cc04c86a9e924ce42faf`
+
 ### Level 30 => 31
+
+
 
 ### Level 31 => 32
 
