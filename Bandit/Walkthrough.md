@@ -1052,8 +1052,59 @@ Password: `5b90576bedb2cc04c86a9e924ce42faf`
 
 ### Level 30 => 31
 
+> There is a git repository at ssh://bandit30-git@localhost/home/bandit30-git/repo. The password for the user bandit30-git is the same as for the user bandit30.
 
+Well, well. We meet yet again!
+- Clone git repo (put a directory path at the end if you like)
+- cd in
+- See what's inside
+- We don't speak about the git-clone ever again
+
+```zsh
+$ git log -p
+commit 3aefa229469b7ba1cc08203e5d8fa299354c496b
+Author: Ben Dover <noone@overthewire.org>
+Date:   Thu May 7 20:14:54 2020 +0200
+
+    initial commit of README.md
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..029ba42
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1 @@
++just an epmty file... muahaha
+```
+
+Seems like someone has a sense of humor... not for long.
+
+Behold! Use *git branch -r* just like before
+
+```zsh
+$ git branch -r
+  origin/HEAD -> origin/master
+  origin/master
+```
+
+Defeat? No! Search deeper!
+
+```zsh
+$ git tag
+  secret
+
+# Muhahahah
+
+$ git show secret
+  47e603bb428404d265f59c42920d81e5
+```
+
+Ladies and gentlemen, we got 'em.
+
+The pass word is `47e603bb428404d265f59c42920d81e5`
 
 ### Level 31 => 32
+
+
 
 ### Level 32 => 33
