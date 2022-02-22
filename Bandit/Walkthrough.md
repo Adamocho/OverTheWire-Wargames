@@ -1191,3 +1191,26 @@ error: failed to push some refs to 'ssh://bandit31-git@localhost/home/bandit31-g
 Yay! The password is `56a9bf19c63d650ce78e6ec0354ee45e`
 
 ### Level 32 => 33
+
+> After all this git stuff its time for another escape. Good luck!
+
+```zsh
+WELCOME TO THE UPPERCASE SHELL
+>> ls
+sh: 1: LS: not found
+>>
+```
+
+Shell converts every letter to uppercase... It needs to be changed. Thankfully, `$0` command allows us to do so.
+
+```zsh
+>> $0
+$ ls
+uppershell
+$ pwd
+/home/bandit32
+$ cat /etc/bandit_pass/bandit33
+c9c3199ddf4121b10cf581a98d51caee
+```
+
+The password is `c9c3199ddf4121b10cf581a98d51caee`
