@@ -29,26 +29,60 @@ In th home directory there is a hidden *.backup* folder. Inside, a HTML file is 
 
 ```html
 $ cat bookmarks.html
-<!DOCTYPE NETSCAPE-Bookmark-file-1>
-<!-- This is an automatically generated file.
-     It will be read and overwritten.
-     DO NOT EDIT! -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
-<TITLE>Bookmarks</TITLE>
-<H1 LAST_MODIFIED="1160271046">Bookmarks</H1>
+    <!DOCTYPE NETSCAPE-Bookmark-file-1>
+    <!-- This is an automatically generated file.
+        It will be read and overwritten.
+        DO NOT EDIT! -->
+    <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
+    <TITLE>Bookmarks</TITLE>
+    <H1 LAST_MODIFIED="1160271046">Bookmarks</H1>
 
-<DL><p>
-    <DT><H3 LAST_MODIFIED="1160249304" PERSONAL_TOOLBAR_FOLDER="true" ID="rdf:#$FvPhC3">Bookmarks Toolbar Folder</H3>
-    [...]
+    <DL><p>
+        <DT><H3 LAST_MODIFIED="1160249304" PERSONAL_TOOLBAR_FOLDER="true" ID="rdf:#$FvPhC3">Bookmarks Toolbar Folder</H3>
+        [...]
 ```
 
 The file contains a **whole lot** of bookmarks. Use `grep` on it.
 
 ```html
 $ cat bookmarks.html | grep pass
-<DT><A HREF="http://leviathan.labs.overthewire.org/passwordus.html | This will be fixed later, the password for leviathan1 is rioGegei8m" ADD_DATE="1155384634" LAST_CHARSET="ISO-8859-1" ID="rdf:#$2wIU71">password to leviathan1</A>
+    <DT><A HREF="http://leviathan.labs.overthewire.org/passwordus.html | This will be fixed later, the password for leviathan1 is rioGegei8m" ADD_DATE="1155384634" LAST_CHARSET="ISO-8859-1" ID="rdf:#$2wIU71">password to leviathan1</A>
 ```
 
 This time I was lucky to find it the easy way.
 
 The password for leviathan1 is `rioGegei8m`
+
+### Level 1 => 2
+
+At first glance, there is a script that is executable. Run it
+
+```zsh
+$ ./check
+    password: rioGegei8m
+    Wrong password, Good Bye ...
+```
+
+It looks like it compares strings. Run `ltrace` on it (see the manpage).
+
+```zsh
+$ ltrace ./check
+    __libc_start_main(0x804853b, 1, 0xffffd774, 0x8048610 <unfinished ...>
+    printf("password: ")                                                                                     = 10
+    getchar(1, 0, 0x65766f6c, 0x646f6700password:
+    )                                                                    = 10
+    getchar(1, 0, 0x65766f6c, 0x646f6700
+    )                                                                    = 10
+    getchar(1, 0, 0x65766f6c, 0x646f6700
+    )                                                                    = 10
+    strcmp("\n\n\n", "sex")                                                                                  = -1
+    puts("Wrong password, Good Bye ..."Wrong password, Good Bye ...
+    )                                                                     = 29
+    +++ exited (status 0) +++
+    leviathan1@leviathan:~$ ./check
+    password: sex
+$ whoami
+    leviathan2
+```
+
+So that's it! We are now leviathan2! I'm afraid that there is no /etc/leviathan_pass/ folder like in the Bandit Wargame.
