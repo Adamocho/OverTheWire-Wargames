@@ -1225,8 +1225,8 @@ In the meantime, you could play some of our other wargames.
 
 If you have an idea for an awesome new level, please let us know!
 ```
-** And so it is done! **
+**And so it is done!**
 
 # Personal opinion
 
-I appreciate every bit of work that was done in order to create such a fantastic game. It's not perfect - like everything in our world - but I was having fun playing and this is the most important thing!
+I appreciate every bit of work that was done in order to create such a fantastic game. It's not perfect - like everything in our world - but I was having fun playing it, which is important.
