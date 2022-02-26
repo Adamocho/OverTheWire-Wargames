@@ -83,6 +83,8 @@ $ ltrace ./check
     password: sex
 $ whoami
     leviathan2
+$ cat /etc/leviathan_pass/leviathan2
+    ougahZi8Ta
 ```
 
-So that's it! We are now leviathan2! I'm afraid that there is no /etc/leviathan_pass/ folder like in the Bandit Wargame.
+So that's it! We are now leviathan2! The password is `ougahZi8Ta`
