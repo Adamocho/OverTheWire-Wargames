@@ -1,4 +1,21 @@
-# OverTheWire - Wargames #
+# OverTheWire - Wargames
+
+```CSS
+      ,----..            ,----,          .---.
+     /   /   \         ,/   .`|         /. ./|
+    /   .     :      ,`   .'  :     .--'.  ' ;
+   .   /   ;.  \   ;    ;     /    /__./ \ : |
+  .   ;   /  ` ; .'___,/    ,' .--'.  '   \' .
+  ;   |  ; \ ; | |    :     | /___/ \ |    ' '
+  |   :  | ; | ' ;    |.';  ; ;   \  \;      :
+  .   |  ' ' ' : `----'  |  |  \   ;  `      |
+  '   ;  \; /  |     '   :  ;   .   \    .\  ;
+   \   \  ',  /      |   |  '    \   \   ' \ |
+    ;   :    /       '   :  |     :   '  |--"
+     \   \ .'        ;   |.'       \   \ ;
+  www. `---` ver     '---' he       '---" ire.org
+```
+
 ---
 
 This section describes how file tree of this repo is organized.
@@ -14,5 +31,5 @@ This section describes how file tree of this repo is organized.
 │   └── Walkthrough.md
 ├── Game2
 ├── [...]
-└── README.md
+└── GameN
 ```
