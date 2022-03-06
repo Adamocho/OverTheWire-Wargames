@@ -7,7 +7,7 @@ $ ssh bandit.labs.overthewire.org -p 2220 -l bandit{number}
 # Paste user password
 
 # If you then want to switch user, use
-# Ctrl-d and then reconect using different login credentials
+# Ctrl-d and then reconnect using different login credentials
 ```
 
 ## Levels
@@ -27,7 +27,7 @@ $ man ssh
     # And then connect to the host
     # like in the section above
 ```
-Login and password is found in level description. Both are `bandit0`.
+Login and password are found in level description. Both are `bandit0`
 
 ### Level 0 => 1
 
@@ -45,14 +45,14 @@ $ cat readme # File's text to stout
 
 > The password for the next level is stored in a file called - located in the home directory
 
-Here, the file is a dash(`-`). Do the same thing as before.
+Here, the file is a dash (`-`). Do the same thing as before.
 
 ```zsh
 $ cat - # IT DOESN'T WORK, because '-' is a prefix for options (-d -e -w etc.)
 
 $ cat ./- # It works!
     # './' is the current directory
-    # followed by a file name '-'
+    # Followed by a file name '-'
 ```
 `CV1DtqXWVFXTvM2F0k09SHz0YwRINYA9` is the password.
 
@@ -129,12 +129,12 @@ Output
 >  - not executable  
 
 
-There's a small problem... namely, multiple folders with files in them. Checking every single one manually would be slow and unefficient, so we will use a couple commands instead.
+There's a small problem... namely, multiple folders with files in them. Checking every single one manually would be slow and inefficient, so we will use a couple commands instead.
 
 The *find* command gives us what we need. It can search for files / directories, their size etc. We are looking for file that is 1033 bytes in size, so let's do it, shall we? :)
 
 ```zsh
-$ find -type f -size 1033c # -type option can be ommited
+$ find -type f -size 1033c # -type option can be omitted
 ```
 Here, we are looking for a file with size of 1033 bytes. Suffix 'b' stands for 512-byte blocks, so we need to use 'c'.
 
@@ -158,7 +158,7 @@ Again, find will be useful in this case. It can also find files owned by a speci
 ```zsh
 $ find / -size 33c -user bandit7 -group bandit6
 # Start from root dir ('/'),
-# filesize 33 bytes ,
+# file size 33 bytes,
 # owned by user bandit7,
 # owned by group bandit6
 ```
@@ -236,10 +236,10 @@ Seems like it's the famous [Rot13](https://en.wikipedia.org/wiki/ROT13) substitu
 
 I'll use the example from Wikipedia, where the 'tr' command is used.
 
-Tr translates (**tr**-anslate) or deletes characters.
+The *tr* command **t r** -anslates or deletes characters, just like its name suggests.
 
 ```zsh
-# Map upper case A-Z to N-ZA-M and lower case a-z to n-za-m
+# Map upper case A-Z to N-ZA-M and lower-case a-z to n-za-m
 $ echo data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
 ```
 Remember that this cipher works in both ways, so you can encrypt and decrypt messages using the same command.
@@ -261,24 +261,24 @@ $ which hexdump hd od xxd dump D
 /usr/bin/od
 /usr/bin/xxd
 ```
-So there are four of them. I'll use xxd as of my personal choice (read the manpage). Create an empty directory under /tmp, so we don't mess with the real file. Then copy the file to that directory and (if you wish) rename it.
+So there are four of them. I'll use `xxd` as of my personal choice (read the manpage). Create an empty directory under /tmp, so we don't mess with the real file. Then copy the file to that directory and (if you wish) rename it.
 
 Now we can work on it.
 
 ```zsh
-$ xxd -r data.txt outpt
+$ xxd -r data.txt output
 ```
 Using *file* cmd on the file *output*:
 ```
 output: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14:30 2020, max compression, from Unix
 ```
 
-Program *gzip* is used to compress data. In contrast, *gunzip* is for expanding data.
+The `gzip` program is used to compress data. In contrast, `gunzip` is for expanding data.
 
 ```zsh
 $ xxd -r data.txt
 ```
-Running file shows, that this is a zip file. Unzip it with (you guessed it) *unzip*.
+Running file shows, that this is a zip file. Unzip it with (you guessed it) `unzip`.
 
 There are multiple levels of compression, so I won't write down every single command. Use man pages and the internet to help yourself.
 
@@ -306,9 +306,9 @@ else
   echo "'$1' is not recognized as a compressed file"
 fi
 ```
-I've dug to the end of this crazy compression tunnel manualy :(
+I've dug to the end of this crazy compression tunnel manually :(
 
-The passsword is `8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL`
+The password is `8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL`
 
 ### Level 13 => 14
 
@@ -428,7 +428,7 @@ For curious, the password is `xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn`
 
 > **NOTE:** if you have solved this level and see ‘Byebye!’ when trying to log into bandit18, this is related to the next level, bandit19
 
-Looks like a perfect opportunity for **diff** usage. Diff compares files and reports what **diff**-ers between them. 
+Looks like a perfect opportunity for `diff` usage. Diff compares files and reports what **d i f f e r s** between them. 
 
 ```zsh
 $ diff passwords.old passwords.new
@@ -439,9 +439,9 @@ $ diff passwords.old passwords.new
 ---
 > kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd
 ```
-Here we see clearly see that the new password have only one line changed, for which we were looking for.
+Here we see clearly see that the new password has only one line changed, for which we were looking for.
 
-So then the password is `kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd`
+So, the password is `kfBf3eYk5BPBRzwjqutbbfE887SVc5Yd`
 
 ### Level 18 => 19
 
@@ -456,7 +456,7 @@ Connection to bandit.labs.overthewire.org closed.
 
 Someone is obviously pulling our leg...  ;-)
 
-I tried logging back to bandit17, and then going to bandit18's home directory. The file is there, but we have no permittion to access it
+I tried logging back to bandit17, and then going to bandit18's home directory. The file is there, but we have no permission to access it
 
 ```zsh
 $ ls -l
@@ -476,7 +476,7 @@ And there we have it!
 
 ### Level 19 => 20
 
-> To gain access to the next level, you should use the setuid binary in the homedirectory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
+> To gain access to the next level, you should use the setuid binary in the home directory. Execute it without arguments to find out how to use it. The password for this level can be found in the usual place (/etc/bandit_pass), after you have used the setuid binary.
 
 Run *bandit20-do*
 
@@ -497,7 +497,7 @@ So then `GbKksEFF4yrVs6il55v6gwY5aVje5f0j` is our password.
 
 ### Level 20 => 21
 
-> There is a setuid binary in the homedirectory that does the following: it makes a connection to localhost on the port you specify as a commandline argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
+> There is a setuid binary in the home directory that does the following: it makes a connection to localhost on the port you specify as a command line argument. It then reads a line of text from the connection and compares it to the password in the previous level (bandit20). If the password is correct, it will transmit the password for the next level (bandit21).
 
 > **NOTE:** Try connecting to your own network daemon to see if it works as you think
 
@@ -689,7 +689,7 @@ This script does a cat on bandit24's password and redirects stdout to /tmp/adam2
 $ chmod 777 getpasswd.sh
 ```
 
-Additionaly, the folder must be accessible to every user.
+Additionally, the folder must be accessible to every user.
 
 ```zsh
 $ chmod 777 /tmp/adam23
@@ -714,7 +714,7 @@ Password is `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ`
 
 ### Level 24 => 25
 
-> A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pincode. There is no way to retrieve the pincode except by going through all of the 10000 combinations, called brute-forcing.
+> A daemon is listening on port 30002 and will give you the password for bandit25 if given the password for bandit24 and a secret numeric 4-digit pin code. There is no way to retrieve the pin code except by going through all of the 10000 combinations, called brute-forcing.
 
 Well, preforming a *brace expansion* will definitely help.
 
@@ -760,7 +760,7 @@ The password of user bandit25 is uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG
 Exiting.
 ```
 
-Correct cridentials are `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 2588`
+Correct credentials are `UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ 2588`
 
 The password of user bandit25 is `uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
@@ -784,7 +784,7 @@ more ~/text.txt
 exit 0
 ```
 
-Check *more* manpage
+Check **more**'s manpage
 ```
 v  -> Start  up  an  editor  at  current line.  The editor is taken from the environment variable VISUAL if defined, or EDITOR  if  VISUAL  is  not defined, or defaults to vi if neither VISUAL nor EDITOR is defined.
 ```
@@ -825,7 +825,7 @@ The password is `3ba3118a22e93127a4ed485be72ef5ea`
 
 > There is a git repository at ssh://bandit27-git@localhost/home/bandit27-git/repo. The password for the user bandit27-git is the same as for the user bandit27.
 
-Create tmp directory. Clone repo to that direcotry and look inside.
+Create tmp directory. Clone repo to that directory and look inside.
 
 ```zsh
 $ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
@@ -1092,7 +1092,7 @@ $ git show secret
   47e603bb428404d265f59c42920d81e5
 ```
 
-Ladies and gentlemen, we got 'em.
+Ladies and gentlemen, we got'em.
 
 The pass word is `47e603bb428404d265f59c42920d81e5`
 
@@ -1185,7 +1185,7 @@ Yay! The password is `56a9bf19c63d650ce78e6ec0354ee45e`
 
 ### Level 32 => 33
 
-> After all this git stuff its time for another escape. Good luck!
+> After all this git stuff it's time for another escape. Good luck!
 
 ```zsh
 WELCOME TO THE UPPERCASE SHELL
@@ -1225,7 +1225,7 @@ In the meantime, you could play some of our other wargames.
 
 If you have an idea for an awesome new level, please let us know!
 ```
-**And so it is done!**
+**And so, it is done!**
 
 # Personal opinion
 

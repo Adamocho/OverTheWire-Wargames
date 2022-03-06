@@ -7,7 +7,7 @@ $ ssh leviathan.labs.overthewire.org -p 2223 -l leviathan{number}
 # Paste user password
 
 # If you then want to switch user, use
-# Ctrl-d and then reconect using different login credentials
+# Ctrl-d and then reconnect using different login credentials
 ```
 
 ## Levels
@@ -19,13 +19,13 @@ $ ssh leviathan.labs.overthewire.org -p 2223 -l leviathan{number}
 
 ### Level 0
 
-Log in using given cridentials:
+Log in using given credentials:
 - login - leviathan0
 - password - leviathan0
 
 ### Level 0 => 1
 
-In th home directory there is a hidden *.backup* folder. Inside, a HTML file is located. Cat-ing the file gives a lot of output...
+In the home directory there is a hidden *.backup* folder. Inside, a HTML file is located. Cat-ing the file gives a lot of output...
 
 ```html
 $ cat bookmarks.html
