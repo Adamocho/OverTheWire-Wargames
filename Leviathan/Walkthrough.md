@@ -57,7 +57,7 @@ The password for leviathan1 is `rioGegei8m`
 
 At first glance, there is a script that is executable. Run it
 
-```zsh
+```console
 $ ./check
     password: rioGegei8m
     Wrong password, Good Bye ...
@@ -65,7 +65,7 @@ $ ./check
 
 It looks like it compares strings. Run `ltrace` on it (see the manpage).
 
-```zsh
+```console
 $ ltrace ./check
     __libc_start_main(0x804853b, 1, 0xffffd774, 0x8048610 <unfinished ...>
     printf("password: ")                                                                                     = 10
@@ -336,3 +336,83 @@ UgaoFee4li
 And there we have it!
 The password is `UgaoFee4li`
 
+### Level 6 => 7
+
+The last stretch. Let's get this done.
+
+```console
+$ ls -Al
+total 20
+-rw-r--r-- 1 root       root        220 May 15  2017 .bash_logout
+-rw-r--r-- 1 root       root       3526 May 15  2017 .bashrc
+-r-sr-x--- 1 leviathan7 leviathan6 7452 Aug 26  2019 leviathan6
+-rw-r--r-- 1 root       root        675 May 15  2017 .profile
+leviathan6@leviathan:~$ ./leviathan6 
+usage: ./leviathan6 <4 digit code>
+```
+
+Another script. It request a 4 digit code. Let's brute force it!
+Create an empty directory under tmp, then boot up your favourite text editor.
+Next, write this shell script
+
+```bash
+#!/bin/bash
+
+for i in {0000..9999}
+do
+    ~/leviathan6 $i
+done
+```
+
+Save it. Add the `x` permission to allow file execution. Execute it.
+
+```console
+$ chmod +x brute.sh
+./brute.sh
+```
+
+Give it a moment. After a while you should see a dollar sign indicating, that we succeeded.
+
+```console
+[..]
+Wrong
+Wrong
+Wrong
+$
+```
+
+Check user's password and voilà.
+
+```console
+$ whoami
+leviathan7
+$ cat /etc/leviathan_pass/leviathan7
+ahy7MaeBo9
+```
+
+The password is `ahy7MaeBo9`
+
+### THE END?
+
+That's it! It's done!
+Let's log in to leviathan7 just to see what's inside...
+
+```console
+$ ls -Al
+total 16
+-rw-r--r-- 1 root       root        220 May 15  2017 .bash_logout
+-rw-r--r-- 1 root       root       3526 May 15  2017 .bashrc
+-r--r----- 1 leviathan7 leviathan7  178 Aug 26  2019 CONGRATULATIONS
+-rw-r--r-- 1 root       root        675 May 15  2017 .profile
+leviathan7@leviathan:~$ cat CONGRATULATIONS 
+Well Done, you seem to have used a *nix system before, now try something more serious.
+(Please don't post writeups, solutions or spoilers about the games on the web. Thank you!)
+```
+
+Uh... I hope they will forgive me my sins :D
+
+### Conclusion
+
+I enjoyed playing this particular wargame. I hope more levels will be added in the future.
+
+For now... I just want to say big thank you to everyone involved in this project 💕
