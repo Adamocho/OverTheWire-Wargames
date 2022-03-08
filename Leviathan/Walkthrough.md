@@ -6,8 +6,8 @@ $ ssh leviathan.labs.overthewire.org -p 2223 -l leviathan{number}
 [..]
 # Paste user password
 
-# If you then want to switch user, use
-# Ctrl-d and then reconnect using different login credentials
+ # If you then want to switch user, use
+ # Ctrl-d, then uparrow, change login credentials
 ```
 
 ## Levels
@@ -63,7 +63,7 @@ $ ./check
     Wrong password, Good Bye ...
 ```
 
-It looks like it compares strings. Run `ltrace` on it (see the manpage).
+It looks like it compares strings. Run `ltrace` on it (see the man page).
 
 ```console
 $ ltrace ./check
@@ -113,7 +113,7 @@ You cant have that file...
 
 Of course it can't be that easy!
 
-Will ltrace unveil the mistery?
+Will ltrace unveil the mystery?
 
 ```console
 $ ltrace ./printfile hello.txt
@@ -145,7 +145,7 @@ system("/bin/cat hello world.txt"/bin/cat: hello: No such file or directory
 Instead of accessing "hello world.txt" is separates it in two making it two files to check. Interesting...
 
 Aha! This file calls an *access()* command, which, according to it's man page, checks if you are permitted to open a specific file.
-It does it by looking at the **OWNER** of the file (real user), not at the executor (effective user). That's it! All there's left to do is to create a file that referes to */etc/leviathan_pass/leviathan3*.
+It does it by looking at the **OWNER** of the file (real user), not at the executor (effective user). That's it! All there's left to do is to create a file that refers to */etc/leviathan_pass/leviathan3*.
 
 Symbolic link may do it. But first, create a directory under /tmp.
 
@@ -226,11 +226,11 @@ setreuid(12003, 12003)                                   = 0
 system("/bin/sh"$ 
 ```
 
-We're in. Let me guide you throgh what just happened:
+We're in. Let me guide you through what just happened:
     - script accepts correct password
     - calls *geteuid()* twice. That means it will receive 12004 uid. In this case it's *12002* simply because we are using ltrace on it.
     - sets user id to that number
-    - loggs into bash
+    - loggs us into bash
 
 Okay. Do it again, but this time without ltrace.
 
@@ -275,7 +275,7 @@ leviathan4@leviathan:~/.trash$ ./bin
 It gives us a binary string, 8 bits per set. 
 I'll use a free *bin-to-ascii* online converter.
 
-It truns out that `Tith4cokei` is the password.
+It turns out that `Tith4cokei` is the password.
 
 ### Level 5 => 6
 
@@ -321,7 +321,7 @@ unlink("/tmp/file.log")                                  = 0
 +++ exited (status 0) +++
 ```
 
-It looks for a file to read, and then outputs it's content.
+It looks for a file to read, and then outputs its content.
 Remember that it swaps it's uid to *leviathan6*'s (look at **getuid()**)
 
 A while ago creating a symbolic link linking to user's password was the solution.
@@ -351,7 +351,7 @@ leviathan6@leviathan:~$ ./leviathan6
 usage: ./leviathan6 <4 digit code>
 ```
 
-Another script. It request a 4 digit code. Let's brute force it!
+Another script. It requests a 4-digit code. Let's brute force it!
 Create an empty directory under tmp, then boot up your favourite text editor.
 Next, write this shell script
 
@@ -394,7 +394,7 @@ The password is `ahy7MaeBo9`
 
 ### THE END?
 
-That's it! It's done!
+We made it!
 Let's log in to leviathan7 just to see what's inside...
 
 ```console
