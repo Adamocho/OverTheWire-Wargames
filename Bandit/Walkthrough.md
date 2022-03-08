@@ -133,7 +133,7 @@ There's a small problem... namely, multiple folders with files in them. Checking
 
 The *find* command gives us what we need. It can search for files / directories, their size etc. We are looking for file that is 1033 bytes in size, so let's do it, shall we? :)
 
-```zsh
+```console
 $ find -type f -size 1033c # -type option can be omitted
 ```
 Here, we are looking for a file with size of 1033 bytes. Suffix 'b' stands for 512-byte blocks, so we need to use 'c'.
@@ -171,7 +171,7 @@ Use cat on the file.
 > The password for the next level is stored in the file data.txt next to the word millionth
 
 Use grep for matching patterns.
-```zsh
+```console
 $ cat data.txt | grep millionth
 ```
 
@@ -196,12 +196,12 @@ $ cat data.txt | sort | uniq -u
 
 *Strings* command takes input and displays any human-readable strings it found. Let's use it.
 
-```zsh
+```console
 $ strings data.txt
 ```
 Many results are shown to our eyes. If you scroll up, you can see a couple of results with leading '=' characters. Let's use grep on it.
 
-```zsh
+```console
 $ strings data.txt | grep ===
 ```
 Command output:
@@ -222,7 +222,7 @@ If we cat data.txt, we can see a string that makes no sense. That's because it w
 
 The command "base64" is used for... I'll let you guess :). See the man page and use it.
 
-```zsh
+```console
 $ base64 -d data.txt
 ```
 
@@ -254,7 +254,7 @@ The password is `5Te8Y4drgCRfCx8ugdwuEX8KFC6k2EUu`
 
 Let's check which functions are available on this machine.
 
-```zsh
+```console
 $ which hexdump hd od xxd dump D
 /usr/bin/hexdump
 /usr/bin/hd
@@ -265,7 +265,7 @@ So there are four of them. I'll use `xxd` as of my personal choice (read the man
 
 Now we can work on it.
 
-```zsh
+```console
 $ xxd -r data.txt output
 ```
 Using *file* cmd on the file *output*:
@@ -275,7 +275,7 @@ output: gzip compressed data, was "data2.bin", last modified: Thu May  7 18:14:3
 
 The `gzip` program is used to compress data. In contrast, `gunzip` is for expanding data.
 
-```zsh
+```console
 $ xxd -r data.txt
 ```
 Running file shows, that this is a zip file. Unzip it with (you guessed it) `unzip`.
@@ -283,7 +283,7 @@ Running file shows, that this is a zip file. Unzip it with (you guessed it) `unz
 There are multiple levels of compression, so I won't write down every single command. Use man pages and the internet to help yourself.
 
 I found a shell script that may be handy
-```zsh
+```bash
 #!/bin/bash
 
 if [ -f $1 ] ; then
@@ -316,7 +316,7 @@ The password is `8ZjyCRiBWFYkneahHwxCv3wb2a1ORpYL`
 
 In this level, the only thing we get is an ssh password for bandit14. Use ssh.
 
-```zsh
+```console
 $ ssh -i sshkey.private bandit14@localhost
 ```
 Voilà! If you are curious, the password is inside /etc/bandit_pass/bandit14 file... `4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e`
@@ -326,7 +326,7 @@ Voilà! If you are curious, the password is inside /etc/bandit_pass/bandit14 fil
 > The password for the next level can be retrieved by submitting the password of the current level to port 30000 on localhost.
 
 Use *nc* to send things through TCP/UDP (read the manpage)
-```zsh
+```console
 $ echo 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e | nc localhost 30000
 ```
 
@@ -340,7 +340,7 @@ And there we get our password! `BfMYroe26WYalil77FoDi9qh59eK5xNr`
 
 I'll use openssl s_client for this. First we connect via ssl, and then provide the password.
 
-```zsh
+```console
 $ openssl s_client -connect localhost:30001
 
 
@@ -360,14 +360,14 @@ The password is `cluFn7wTiGryunymYOu4RcffSxQluehd`
 
 Get user password from /etc/bandit_pass/bandit16 is necessary
 
-```zsh
+```console
 # Scan localhost ports
 $ nmap -p 31000-32000 localhost
 ```
 
 It seems like there are only 5 results. And after a bit of trial and error I can confidently say, that the correct one is on port `31790`
 
-```zsh
+```console
 $ openssl s_client -connect localhost:31790
 
 # Now paste user password
@@ -430,7 +430,7 @@ For curious, the password is `xLYVMN9WE5zQ5vHacb0sZEVqbrp7nBTn`
 
 Looks like a perfect opportunity for `diff` usage. Diff compares files and reports what **d i f f e r s** between them. 
 
-```zsh
+```console
 $ diff passwords.old passwords.new
 
 # Output
@@ -458,7 +458,7 @@ Someone is obviously pulling our leg...  ;-)
 
 I tried logging back to bandit17, and then going to bandit18's home directory. The file is there, but we have no permission to access it
 
-```zsh
+```console
 $ ls -l
 
 total 4
@@ -467,7 +467,7 @@ total 4
 
 This doesn't work. 
 On the other hand, ssh has an option to send commands to remote hosts. Ideal.
-```zsh
+```console
 $ ssh bandit.labs.overthewire.org -p 2220 -l bandit18 "cat ~/readme"
 ```
 
@@ -480,7 +480,7 @@ And there we have it!
 
 Run *bandit20-do*
 
-```zsh
+```console
 $ ./bandit20-do
 Run a command as another user.
   Example: ./bandit20-do id
@@ -488,7 +488,7 @@ Run a command as another user.
 
 Check /etc/bandit_pass/bandit20 password as bandit20
 
-```zsh
+```console
 $ ./bandit20-do cat /etc/bandit_pass/bandit20
 GbKksEFF4yrVs6il55v6gwY5aVje5f0j
 ```
@@ -503,19 +503,19 @@ So then `GbKksEFF4yrVs6il55v6gwY5aVje5f0j` is our password.
 
 Open two terminal sessions (or use tmux, terminator, jobs, etc.)
 On the first one, type the following
-```zsh
+```console
 $ nc -lnvp 1234 # nc listen on port 1234 verbose no dns
 listening on [any] 1234 ...
 ```
 
 On the second one, connect using *suconnect*
-```zsh
+```console
 $ ./suconnect 1234
 ```
 
 Now paste your password to nc and there it is!
 Both prompts shown
-```zsh
+```console
 # NC
 $ nc -lnvp 1234
 listening on [any] 1234 ...
@@ -536,7 +536,7 @@ The password is `gE269g2h3mw3pwgrj0Ha9Uoqen1c9DGr`
 > A program is running automatically at regular intervals from cron, the time-based job scheduler. Look in /etc/cron.d/ for the configuration and see what command is being executed.
 
 Let's list every file in /etc/cron.d/ directory as suggested
-```zsh
+```console
 $ ls -Al /etc/cron.d
 total 28
 -rw-r--r-- 1 root root  62 May 14  2020 cronjob_bandit15_root
@@ -549,22 +549,25 @@ total 28
 ```
 
 We can read every one of them. Great! Cat *cronjob_bandit22
-```zsh
+```console
 $ cat /etc/cron.d/cronjob_bandit22
 @reboot bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
 * * * * * bandit22 /usr/bin/cronjob_bandit22.sh &> /dev/null
 ```
 
 It's clear that cron runs *cronjob_bandit22.sh* script on reebot and every second. Let's find out what is does.
-```zsh
+```console
 $ cat /usr/bin/cronjob_bandit22.sh
+```
+
+```bash
 #!/bin/bash
 chmod 644 /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 cat /etc/bandit_pass/bandit22 > /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 ```
 
 The script appends bandit22's password to */tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv* Cat the file...
-```zsh
+```console
 $ cat /tmp/t7O6lds9S0RqQh9aMcz6ShpAoZKF7fgv
 Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ```
@@ -577,7 +580,7 @@ Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 > **NOTE:** Looking at shell scripts written by other people is a very useful skill. The script for this level is intentionally made easy to read. If you are having problems understanding what it does, try executing it to see the debug information it prints.
 
 See what is inside */etc/cron.d/cronjob_bandit23*
-```zsh
+```console
 $ cat /etc/cron.d/cronjob_bandit23
 @reboot bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
 * * * * * bandit23 /usr/bin/cronjob_bandit23.sh  &> /dev/null
@@ -586,6 +589,8 @@ $ cat /etc/cron.d/cronjob_bandit23
 Check /usr/bin/cronjob_bandit23.sh
 ```zsh
 cat /usr/bin/cronjob_bandit23.sh
+```
+```bash
 #!/bin/bash
 
 myname=$(whoami)
@@ -597,7 +602,7 @@ cat /etc/bandit_pass/$myname > /tmp/$mytarget
 ```
 It creates a file and appends password to it.
 Run the script and *cat* it's output file.
-```zsh
+```console
 $ bash /usr/bin/cronjob_bandit23.sh
 Copying passwordfile /etc/bandit_pass/bandit22 to /tmp/8169b67bd894ddbb4412f91573b38db3
 
@@ -606,12 +611,12 @@ Yk7owGAcWjwMVRwrTesJEwB7WVOiILLI
 ```
 But it's **not** bandit23's password. It is bandit's 22 password.
 Paste ` echo I am user $myname | md5sum | cut -d ' ' -f 1` from the script to command line. Change *$myname* to *bandit23*. Now press ENTER
-```zsh
+```console
 $ echo I am user bandit23 | md5sum | cut -d ' ' -f 1
 8ca319486bfbbc3663ea0fbe81326349
 ```
 The output is the file, which we are looking for. It's located under */tmp*
-```zsh
+```console
 $ cat /tmp/8ca319486bfbbc3663ea0fbe81326349
 jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n
 ```
@@ -626,14 +631,14 @@ Bandit23's password is `jc1udXuA1tiHqjIsL8yaapX5XIAI6i0n`
 > **NOTE 2:** Keep in mind that your shell script is removed once executed, so you may want to keep a copy around…
 
 cat */etc/cron.d/cronjob_bandit24*
-```zsh
+```console
 $ cat /etc/cron.d/cronjob_bandit24
 @reboot bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
 * * * * * bandit24 /usr/bin/cronjob_bandit24.sh &> /dev/null
 ```
 
 Check /usr/bin/cronjob_bandit23.sh
-```zsh
+```bash
 $ cat /usr/bin/cronjob_bandit23.sh
 
 #!/bin/bash
@@ -658,14 +663,14 @@ done
 
 This script executes every file that is in /var/spool/bandit24 (because he's executing cron job). Maybe we can create something inside that directory?
 
-```zsh
+```console
 $ cd /var/spool/bandit24
 bandit23@bandit:/var/spool/bandit24$
 ```
 
 Well, we can cd into it, but can we create any files? It's possible to check by trial-and-error, but inspecting directory permissions is both faster and easier to check.
 
-```zsh
+```console
 $ ls -l  /var/spool
 total 12
 drwxrwx-wx 88 root bandit24 4096 Feb 18 19:49 bandit24
@@ -674,7 +679,7 @@ drwxrwx-wx 88 root bandit24 4096 Feb 18 19:49 bandit24
 Bandit23 has no read permission, but do have write and execute permissions. So we can create files, go inside that directory, but it's neither possible to read nor list the files in that directory.
 
 I created a script in that directory.
-```zsh
+```console
 $ touch getpasswd.sh
 $ vi getpasswd.sh
 
@@ -685,25 +690,25 @@ cat /etc/bandit_pass/bandit24 > /tmp/adam23/file.txt
 
 This script does a cat on bandit24's password and redirects stdout to /tmp/adam23/file.txt. Now in order for it to execute, it needs the **x** permission (or **1** in octal).
 
-```zsh
+```console
 $ chmod 777 getpasswd.sh
 ```
 
 Additionally, the folder must be accessible to every user.
 
-```zsh
+```console
 $ chmod 777 /tmp/adam23
 ```
 
 Check what's the time
-```zsh
+```console
 $ date
 Fri Feb 18 19:48:49 CET 2022
 ```
 
 Cron job executes every minute, so wait 'till next minute.
 
-```zsh
+```console
 $ date
 Fri Feb 18 19:49:14 CET 2022
 ```
@@ -721,7 +726,7 @@ Well, preforming a *brace expansion* will definitely help.
 First, create correct brute-force input
 Save to file or display it in terminal
 
-```zsh
+```console
 echo -e UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ\ {0..9}{0..9}{0..9}{0..9}\ '\n'
 ```
 
@@ -742,7 +747,7 @@ Quick look at the output
 
 With input ready, use `nc localhost 30002` (pipe) to connect with port 30002.
 
-```zsh
+```console
 echo -e UoMYTrfrBFHyQXmg6gzctqAwOmw1IohZ\ {0..9}{0..9}{0..9}{0..9}\ '\n' | nc localhost 30002
 
 # OUTPUT
@@ -768,13 +773,13 @@ The password of user bandit25 is `uNG9O58gUE7snukf3bvZ0rxhtnjzSGzG`
 
 > Logging in to bandit26 from bandit25 should be fairly easy… The shell for user bandit26 is not /bin/bash, but something else. Find out what it is, how it works and how to break out of it.
 
-```zsh
+```console
 $ cat /etc/passwd | grep bandit26
 bandit26:x:11026:11026:bandit level 26:/home/bandit26:/usr/bin/showtext
 ```
 
 
-```zsh
+```console
 $ cat /usr/bin/showtext
 #!/bin/sh
 
@@ -806,7 +811,7 @@ The password is `5czgV9L3Xx8JPOyRbXh6lQbmIOWvPT6Z`
 
 Nothing hard, just ls and use that script.
 
-```zsh
+```console
 $ ls -Ahl
 total 28K
 -rwsr-x--- 1 bandit27 bandit26 7.2K May  7  2020 bandit27-do # it was in red
@@ -827,7 +832,7 @@ The password is `3ba3118a22e93127a4ed485be72ef5ea`
 
 Create tmp directory. Clone repo to that directory and look inside.
 
-```zsh
+```console
 $ git clone ssh://bandit27-git@localhost/home/bandit27-git/repo
 Cloning into 'repo'...
 Could not create directory '/home/bandit27/.ssh'.
@@ -861,7 +866,7 @@ The password to the next level is: `0ef186ac70e04ea33b4c1853d2526fa2`
 
 Same thing as before.
 
-```zsh
+```console
 $ git clone ssh://bandit28-git@localhost/home/bandit28-git/repo
 # Provide bandit28 password
 
@@ -879,7 +884,7 @@ Some notes for level29 of bandit.
 ```
 
 Check git log
-```zsh 
+```console 
 $ git log
 commit edd935d60906b33f0619605abd1689808ccdd5ee
 Author: Morla Porla <morla@overthewire.org>
@@ -902,7 +907,7 @@ Date:   Thu May 7 20:14:49 2020 +0200
 
 Aha! It was changed. Inspect changes by running *git diff*
 
-```zsh
+```console
 $ git diff c086d11a00c0648d095d04c089786efef5e01264 de2ebe2d5fd1598cd547f4d56247e053be3fdc38
 diff --git a/README.md b/README.md
 index 3f7cee8..7ba2d2f 100644
@@ -924,7 +929,7 @@ The password is `bbc96594b4e001778eee9975372716b2`
 
 It's very similar to the previous level in a sense that we must first clone the repo into the tmp directory. 
 
-```zsh
+```console
 /tmp/adam23$ git clone ssh://bandit29-git@localhost/home/bandit29-git/repo
 
 # Next, provide bandit29's password
@@ -933,7 +938,7 @@ It's very similar to the previous level in a sense that we must first clone the 
 Now *cd* and look inside.
 
 There is only one file called README.md.
-```zsh
+```console
 $ cat README.md
 # Bandit Notes
 Some notes for bandit30 of bandit.
@@ -947,7 +952,7 @@ Some notes for bandit30 of bandit.
 No password in production... what about the diff file?  
 *The -p flag is for displaying diff files*
 
-```zsh
+```console
 $ git log -p 
 commit 208f463b5b3992906eabf23c562eda3277fea912
 Author: Ben Dover <noone@overthewire.org>
@@ -992,7 +997,7 @@ index 0000000..2da2f39
 The same result... What about the other branches?  
 *The -r switch shows remote branches*
 
-```zsh
+```console
 $ git branch -r
   origin/HEAD -> origin/master
   origin/dev
@@ -1001,7 +1006,7 @@ $ git branch -r
 ```
 
 The *dev* branch looks a bit sus... :D
-```zsh
+```console
 $ git checkout dev
 Branch dev set up to track remote branch dev from origin.
 Switched to a new branch 'dev'
@@ -1012,7 +1017,7 @@ $ git branch
 ```
 
 Again, *git log -p*
-```zsh
+```console
 $ git log -p
 commit bc833286fca18a3948aec989f7025e23ffc16c07
 Author: Morla Porla <morla@overthewire.org>
@@ -1053,7 +1058,7 @@ Well, well. We meet yet again!
 - See what's inside
 - We don't speak about the git-clone ever again
 
-```zsh
+```console
 $ git log -p
 commit 3aefa229469b7ba1cc08203e5d8fa299354c496b
 Author: Ben Dover <noone@overthewire.org>
@@ -1074,7 +1079,7 @@ Seems like someone has a sense of humor... not for long.
 
 Behold! Use *git branch -r* just like before
 
-```zsh
+```console
 $ git branch -r
   origin/HEAD -> origin/master
   origin/master
@@ -1082,7 +1087,7 @@ $ git branch -r
 
 Defeat? No! Search deeper!
 
-```zsh
+```console
 $ git tag
   secret
 
@@ -1102,7 +1107,7 @@ The pass word is `47e603bb428404d265f59c42920d81e5`
 
 Here we go again.
 
-```zsh
+```console
 $ ls -Ah
 .git  .gitignore  README.md
 bandit31@bandit:/tmp/adam23/ripo$ git log -p
@@ -1136,7 +1141,7 @@ index 0000000..0edecc0
 
 This time it's commit-time!
 
-```zsh
+```console
 bandit31@bandit:/tmp/adam23/ripo$ cat > key.txt
 May I come in?
 bandit31@bandit:/tmp/adam23/ripo$ cat key.txt
@@ -1187,7 +1192,7 @@ Yay! The password is `56a9bf19c63d650ce78e6ec0354ee45e`
 
 > After all this git stuff it's time for another escape. Good luck!
 
-```zsh
+```console
 WELCOME TO THE UPPERCASE SHELL
 >> ls
 sh: 1: LS: not found
@@ -1196,7 +1201,7 @@ sh: 1: LS: not found
 
 Shell converts every letter to uppercase... It needs to be changed. Thankfully, `$0` command allows us to do so.
 
-```zsh
+```console
 >> $0
 $ ls
 uppershell
@@ -1212,7 +1217,7 @@ The password is `c9c3199ddf4121b10cf581a98d51caee`
 
 What now?
 
-```zsh
+```console
 $ ls -Ah
 .bash_logout  .bashrc  .profile  README.txt
 bandit33@bandit:~$ cat README.txt
