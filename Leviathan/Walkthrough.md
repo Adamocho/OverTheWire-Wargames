@@ -174,3 +174,105 @@ The password is `Ahdiemoo1j`
 
 ### Level 3 => 4
 
+Let's get on with it.
+Check what is inside.
+
+```console
+$ ls -al
+total 32
+drwxr-xr-x  2 root       root        4096 Aug 26  2019 .
+drwxr-xr-x 10 root       root        4096 Aug 26  2019 ..
+-rw-r--r--  1 root       root         220 May 15  2017 .bash_logout
+-rw-r--r--  1 root       root        3526 May 15  2017 .bashrc
+-r-sr-x---  1 leviathan4 leviathan3 10288 Aug 26  2019 level3
+-rw-r--r--  1 root       root         675 May 15  2017 .profile
+leviathan3@leviathan:~$ ./level3
+Enter the password> 1234
+bzzzzzzzzap. WRONG
+```
+
+Yet another password checking script.
+Yet another perfect use for *ltrace*.
+
+```console
+$ ltrace ./level3 
+__libc_start_main(0x8048618, 1, 0xffffd784, 0x80486d0 <unfinished ...>
+strcmp("h0no33", "kakaka")                               = -1
+printf("Enter the password> ")                           = 20
+fgets(Enter the password> 12345 123
+"12345 123\n", 256, 0xf7fc55a0)                    = 0xffffd590
+strcmp("12345 123\n", "snlprintf\n")                     = -1
+puts("bzzzzzzzzap. WRONG"bzzzzzzzzap. WRONG
+)                               = 19
++++ exited (status 0) +++
+```
+
+As we can see, ``strcmp("12345 123\n", "snlprintf\n")`` compares the input with `snlprintf`.
+We'll make use of it.
+
+```console
+leviathan3@leviathan:~$ ltrace ./level3 
+__libc_start_main(0x8048618, 1, 0xffffd784, 0x80486d0 <unfinished ...>
+strcmp("h0no33", "kakaka")                               = -1
+printf("Enter the password> ")                           = 20
+fgets(Enter the password> snlprintf
+"snlprintf\n", 256, 0xf7fc55a0)                    = 0xffffd590
+strcmp("snlprintf\n", "snlprintf\n")                     = 0
+puts("[You've got shell]!"[You've got shell]!
+)                              = 20
+geteuid()                                                = 12003
+geteuid()                                                = 12003
+setreuid(12003, 12003)                                   = 0
+system("/bin/sh"$ 
+```
+
+We're in. Let me guide you throgh what just happened:
+    - script accepts correct password
+    - calls *geteuid()* twice. That means it will receive 12004 uid. In this case it's *12002* simply because we are using ltrace on it.
+    - sets user id to that number
+    - loggs into bash
+
+Okay. Do it again, but this time without ltrace.
+
+```console
+$ ./level3 
+Enter the password> snlprintf
+[You've got shell]!
+$ whoami
+leviathan4
+```
+
+And now we are leviathan4. Cat it's password and we're done.
+
+```console
+$ cat /etc/leviathan_pass/leviathan4
+vuH0coox6m
+```
+
+The password is `vuH0coox6m`
+
+### Level 4 => 5
+
+This level makes use of a different challenge.
+
+```console
+ ls -Al
+total 16
+-rw-r--r-- 1 root root        220 May 15  2017 .bash_logout
+-rw-r--r-- 1 root root       3526 May 15  2017 .bashrc
+-rw-r--r-- 1 root root        675 May 15  2017 .profile
+dr-xr-x--- 2 root leviathan4 4096 Aug 26  2019 .trash
+leviathan4@leviathan:~$ cd .trash/
+leviathan4@leviathan:~/.trash$ ls
+bin
+leviathan4@leviathan:~/.trash$ ls -Al
+total 8
+-r-sr-x--- 1 leviathan5 leviathan4 7352 Aug 26  2019 bin
+leviathan4@leviathan:~/.trash$ ./bin
+01010100 01101001 01110100 01101000 00110100 01100011 01101111 01101011 01100101 01101001 00001010
+```
+
+It gives us a binary string, 8 bits per set. 
+I'll use a free *bin-to-ascii* online converter.
+
+It truns out that `Tith4cokei` is the password.
