@@ -408,11 +408,14 @@ leviathan7@leviathan:~$ cat CONGRATULATIONS
 Well Done, you seem to have used a *nix system before, now try something more serious.
 (Please don't post writeups, solutions or spoilers about the games on the web. Thank you!)
 ```
+> (Please don't post writeups, solutions or spoilers about the games on the web. Thank you!)
 
 Uh... I hope they will forgive me my sins :D
 
+---
 ### Conclusion
 
 I enjoyed playing this particular wargame. I hope more levels will be added in the future.
 
-For now... I just want to say big thank you to everyone involved in this project 💕
+For now... I just want to say a big thank you to everyone involved in this project 💕  
+Good job!

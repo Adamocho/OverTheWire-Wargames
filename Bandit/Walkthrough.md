@@ -1232,6 +1232,7 @@ If you have an idea for an awesome new level, please let us know!
 ```
 **And so, it is done!**
 
-# Personal opinion
+## Last words
 
-I appreciate every bit of work that was done in order to create such a fantastic game. It's not perfect - like everything in our world - but I was having fun playing it, which is important.
+I appreciate every bit of work that was done in order to create such a fantastic game. It's not perfect - like everything in our world - but I was having fun playing it, which is important.  
+Big thank you to everyone involved.
